@@ -7,3 +7,4 @@ views/
 Makefile
 *.o
 *.exe
+getppid.c
