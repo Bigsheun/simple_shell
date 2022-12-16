@@ -8,3 +8,5 @@ Makefile
 *.o
 *.exe
 getppid.c
+getline.c
+piped.c
