@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "outputs.h"
 #include "string_utils.h"
 #include "inbuilt_cmd.h"
@@ -8,7 +7,7 @@
 * main - c-program entry point
 * @argc: command-line count
 * @argv: array of command-line strings
-* @envp: array of enviironment strings
+* @envp: array of environment strings
 *
 * Return: 0 success
 */
@@ -17,11 +16,9 @@ int main(int argc, char **argv,	char **envp)
 	char *input = NULL, *cmd;
 	size_t n = 0, count;
 
+	/*find something to do with argc and argv*/
 	if (argc > 1)
-	{
-		write_stringz(argv[1]);
-		write_stringz("parameters are not accepted \n");
-	}
+		do_nothing(argv[1]);
 
 	write_stringz("$ ");
 	count = getline(&input, &n, stdin);
@@ -42,4 +39,19 @@ int main(int argc, char **argv,	char **envp)
 	}
 
 	return (0);
+}
+
+/**
+* do_nothing - does nothing to string
+* @s: string
+*
+* Description: I use this function 
+* so I will not have to use __attribute__((unused))
+* on argc and argv 
+* makes program harder to read
+* program will not compile if some arguments are not used
+*/
+void do_nothing(char *s)
+{
+	s[0] = s[0] + '\0';
 }
