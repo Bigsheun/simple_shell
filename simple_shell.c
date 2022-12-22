@@ -36,7 +36,7 @@ int main(int argc, char **argv,	char **envp)
 		if (is_inbuilt(cmd))
 			perform_inbuilt_cmd(&info);
 		else
-			write_stringz("external commands not yet implemented");
+			perform_external_cmd(&info, envp);
 		/*end-if*/
 		write_stringz("\n");
 
