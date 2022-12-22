@@ -1,6 +1,4 @@
-#include "inbuilt_cmd.h"
-#include "string_utils.h"
-#include "outputs.h"
+#include "main.h"
 #include <stdlib.h>
 /**
 * is_inbuilt - checks if argument is in list of
@@ -10,12 +8,13 @@
 */
 short is_inbuilt(char *cmd)
 {
-	char *cmd_list[] = {"env", "ls", "exit", "pwd", NULL};
+	builtin_table *cmd_list;
 	int i = 0;
 
-	while (cmd_list[i] != NULL)
+	cmd_list = get_builtin_cmd_tbl();
+	while (cmd_list[i].type != NULL)
 	{
-		if (!_strcmp(cmd_list[i], cmd))
+		if (!_strcmp(cmd_list[i].type, cmd))
 			return (1);
 		i++;
 	}
@@ -29,19 +28,41 @@ short is_inbuilt(char *cmd)
 * @cmd: command
 * @cmd_line: command string
 * @envp: array of command-line strings
-*
+* 
+* Return: return status
 */
-void perform_inbuilt_cmd(
-	char *cmd,
-	char *cmd_line __attribute__((unused)),
-	char **envp
-)
+int  perform_inbuilt_cmd(info_t *info)
 {
-	if (!_strcmp(cmd, "env"))
-		write_strz_array(envp);
-	else if (!_strcmp(cmd, "exit"))
-		exit(0);
-	else
-		write_stringz("other inbuilt commands pending");
-	/*end-if*/
+	builtin_table *b_table = get_builtin_cmd_tbl();
+	int i = 0;
+
+	while (b_table[i].type != NULL)
+	{
+		if (!_strcmp(b_table[i].type, info->arg))
+			return (b_table[i].func(info));
+		i++;
+	}
+
+	return (1);
+}
+/**
+* get_builtin_cmd_tbl - Provides table of inbuilt commands
+* Prevents inconsistencies. Keeps the code dry
+*
+
+* Return: array of builtin_table (records)
+*/
+builtin_table *get_builtin_cmd_tbl()
+{
+	static	builtin_table builtintbl[] = {
+		{"exit", _myexit},
+		{"env", _myenv},
+		{"pwd", _mypwd},
+		{"cd", _mycd},
+		{"setenv", _mysetenv},
+		{"getenv", _mygetenv},
+		{NULL, NULL}
+	};
+
+	return (builtintbl);
 }

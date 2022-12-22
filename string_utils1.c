@@ -1,4 +1,4 @@
-
+#include "main.h"
 /**
 * _strcmp - compare
 * @s1: first
@@ -36,4 +36,45 @@ void str_replace(char *s, char find, char repl)
 		++i;
 	}
 
+}
+
+/**
+ * starts_with - checks if haystack starts with needle
+ * @haystack: string to search
+ * @needle: the substring to find
+ *
+ * Return: address of next char of haystack or NULL
+ */
+int starts_with(const char *haystack, const char *needle)
+{
+	while (*needle)
+		if (*needle++ != *haystack++)
+			return (0);
+	return (1);
+}
+
+/**
+ * _strdup - duplicates a string
+ * @str: the string to duplicate
+ *
+ * Return: pointer to the duplicated string
+ */
+char *str_dup(const char *str)
+{
+	int length = 0;
+	char *ret;
+
+	if (str == NULL)
+		return (NULL);
+
+	while (*str++)
+		length++;
+	ret = malloc(sizeof(char) * (length + 1));
+	if (!ret)
+		return (NULL);
+
+	for (length++; length--;)
+		ret[length] = *--str;
+
+	return (ret);
 }

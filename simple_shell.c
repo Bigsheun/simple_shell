@@ -1,7 +1,6 @@
-#include "outputs.h"
-#include "string_utils.h"
-#include "inbuilt_cmd.h"
-#include "simple_shell.h"
+#include "main.h"
+#include <unistd.h>
+#include <stdlib.h>
 
 /**
 * main - c-program entry point
@@ -13,45 +12,70 @@
 */
 int main(int argc, char **argv,	char **envp)
 {
-	char *input = NULL, *cmd;
+	char *input = NULL, *cmd, **cmd_buffer;
 	size_t n = 0, count;
+	info_t info = INFO_INIT;
 
-	/*find something to do with argc and argv*/
-	if (argc > 1)
-		do_nothing(argv[1]);
+	info.argc = argc;
+	info.argv = argv;
+	populate_env(&info, envp);
 
-	write_stringz("$ ");
-	count = getline(&input, &n, stdin);
-	while (input[0] != '\n' && (int)count != -1)
+	count = get_line(&input, &n, stdin);
+	while ((int)count != -1)
 	{
-		str_replace(input, '\n', ' ');
-		cmd = strtok(input, " ");
+		cmd_buffer = split_arg(input, " \t");
+		cmd = cmd_buffer[0];
+		if (cmd == NULL)
+		{
+			count = get_line(&input, &n, stdin);
+			continue;
+		}
+		info.arg = cmd;
+		info.cmd_buf = cmd_buffer;
 
 		if (is_inbuilt(cmd))
-			perform_inbuilt_cmd(cmd, input, envp);
+			perform_inbuilt_cmd(&info);
 		else
 			write_stringz("external commands not yet implemented");
 		/*end-if*/
 		write_stringz("\n");
 
-		write_stringz("$ ");
-		count = getline(&input, &n, stdin);
+		count = get_line(&input, &n, stdin);
 	}
-
-	return (0);
 }
 
 /**
-* do_nothing - does nothing to string
-* @s: string
+* get_line - safely gets a clean command string from getline
+* @lineptr: destination of string
+* @n: size of string to get (if not 0)
+* @fd: stream to read from
 *
-* Description: I use this function 
-* so I will not have to use __attribute__((unused))
-* on argc and argv 
-* makes program harder to read
-* program will not compile if some arguments are not used
+* Return: size of string inputed
 */
-void do_nothing(char *s)
+size_t get_line(char **lineptr, size_t *count, FILE *fd)
 {
-	s[0] = s[0] + '\0';
+
+	if (lineptr[0] != NULL)
+	{
+		free(lineptr[0]);
+		lineptr[0] = NULL;
+	}
+	count[0] = 0;
+
+	show_prompt();
+	getline(lineptr, count, fd);
+	str_replace(lineptr[0], '\n', ' ');
+
+
+	return (count[0]);
+}
+
+/**
+* show_prompt - display prompt in interactive mode
+*
+*/
+void show_prompt()
+{
+	if (isatty(STDIN_FILENO))
+		write_stringz("$ ");
 }

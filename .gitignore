@@ -1,5 +1,5 @@
 *.txt
-GIT.php
+*.php
 new_files/
 views/
 *.sublime-project
@@ -10,3 +10,5 @@ Makefile
 getppid.c
 getline.c
 piped.c
+fork.c
+functions-list.c

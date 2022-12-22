@@ -25,3 +25,18 @@ void write_strz_array(char **sa)
 		write_stringz("\n");
 	}
 }
+/**
+* s_array_len - gets length of null terminate string array
+* @arr: array
+*
+* Return: length
+*/
+unsigned int s_array_len(char **arr)
+{
+	unsigned int count = 0, i = 0;
+
+	while (arr[i++] != NULL)
+		count++;
+
+	return (count);
+}

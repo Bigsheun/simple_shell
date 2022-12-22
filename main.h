@@ -30,23 +30,20 @@
 #define HIST_FILE	".simple_shell_history"
 #define HIST_MAX	4096
 
-extern char **environ;
+/*extern char **environ;*/
 
 /**
- * struct liststr - singly linked list
- * @num: the number field
- * @str: a string
- * @next: points to the next node
- */
-
-typedef struct liststr
+* struct liststr - singly linked list
+* @index: index of environment
+* @str: a string
+* @next: pointer to the next node
+*/
+typedef struct list_str
 {
-	int num;
+	int index;
 	char *str;
-	struct liststr *next;
+	struct list_str *next;
 } list_t;
-
-
 
 /**
  * struct passinfo - contains pseudo-arguements to pass into a function,
@@ -86,7 +83,6 @@ typedef struct passinfo
 	list_t *env;
 	list_t *history;
 	list_t *alias;
-	char **environ;
 	int env_changed;
 	int status;
 
@@ -97,9 +93,8 @@ typedef struct passinfo
 } info_t;
 
 #define INFO_INIT \
-{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
-		0, 0, 0}
-
+{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, 0, 0, \
+NULL, 0, 0, 0}
 
 /**
  * struct builtin - contains a builtin string and related function
@@ -113,112 +108,71 @@ typedef struct builtin
 	int (*func)(info_t *);
 } builtin_table;
 
+/*simple_shell.c*/
+size_t get_line(char **lineptr, size_t *count, FILE *fd);
+void show_prompt();
+size_t get_line(char **lineptr, size_t *count, FILE *fd);
 
-int hsh(info_t *, char **);
-int find_builtin(info_t *);
-void find_cmd(info_t *);
-void fork_cmd(info_t *);
+/*inbuilt_cmd*/
+builtin_table *get_builtin_cmd_tbl();
+short is_inbuilt(char *cmd);
+int perform_inbuilt_cmd(info_t *info);
 
-
-int is_cmd(info_t *, char *);
-char *dup_chars(char *, int, int);
-char *find_path(info_t *, char *, char *);
-
-int loophsh(char **);
-
-void _eputs(char *);
-int _eputchar(char);
-int _putfd(char c, int fd);
-int _putsfd(char *str, int fd);
-
-int _strlen(char *);
-int _strcmp(char *, char *);
-char *starts_with(const char *, const char *);
-char *_strcat(char *, char *);
-
-char *_strcpy(char *, char *);
-char *_strdup(const char *);
-void _puts(char *);
-int _putchar(char);
-
-
-char *_strncpy(char *, char *, int);
-char *_strncat(char *, char *, int);
-char *_strchr(char *, char);
-
-char **strtow(char *, char *);
-char **strtow2(char *, char);
-
-char *_memset(char *, char, unsigned int);
-void ffree(char **);
-void *_realloc(void *, unsigned int, unsigned int);
-
-int bfree(void **);
-
-
-int interactive(info_t *);
-int is_delim(char, char *);
-int _isalpha(int);
-int _atoi(char *);
-
-int _erratoi(char *);
-void print_error(info_t *, char *);
-int print_d(int, int);
-char *convert_number(long int, int, int);
-void remove_comments(char *);
-
-
+/*inbuilt_cmd2*/
 int _myexit(info_t *);
 int _mycd(info_t *);
-int _myhelp(info_t *);
-
-int _myhistory(info_t *);
-int _myalias(info_t *);
-
-ssize_t get_input(info_t *);
-int _getline(info_t *, char **, size_t *);
-void sigintHandler(int);
-
-
-void clear_info(info_t *);
-void set_info(info_t *, char **);
-void free_info(info_t *, int);
-
-
-char *_getenv(info_t *, const char *);
 int _myenv(info_t *);
-int _mysetenv(info_t *);
-int _myunsetenv(info_t *);
-int populate_env_list(info_t *);
+int _mypwd(info_t *);
 
-char **get_environ(info_t *);
-int _unsetenv(info_t *, char *);
-int _setenv(info_t *, char *, char *);
+/*string_utils1.c*/
+int _strcmp(char *src, char *dst);
+void str_replace(char *s, char find, char replace);
+int starts_with(const char *haystack, const char *needle);
+char *str_dup(const char *);
 
-char *get_history_file(info_t *info);
-int write_history(info_t *info);
-int read_history(info_t *info);
-int build_history_list(info_t *info, char *buf, int linecount);
-int renumber_history(info_t *info);
+/*string_utils2*/
+int _strlen(const char *s);
+char *_strcpy(char *, const char *);
+char *_strcat(char *dst, const char *src);
 
+/*arg_parse.c*/
+short found_in(char c, char *s);
+int wordstart(char *str, char *delims, int index);
+int delimstart(char *str, char *delims, int index);
+int wordcount(char *str, char *delims);
+char **split_arg(char *arg, char *delims);
 
-list_t *add_node(list_t **, const char *, int);
-list_t *add_node_end(list_t **, const char *, int);
-size_t print_list_str(const list_t *);
-int delete_node_at_index(list_t **, unsigned int);
-void free_list(list_t **);
+/*outputs.c*/
+void write_stringz(char *s);
+void write_strz_array(char **sa);
+unsigned int s_array_len(char **arr);
 
-size_t list_len(const list_t *);
-char **list_to_strings(list_t *);
-size_t print_list(const list_t *);
-list_t *node_starts_with(list_t *, char *, char);
-ssize_t get_node_index(list_t *, list_t *);
+/*env.c - env2.c*/
+int populate_env(info_t *info,char **envp);
+list_t *add_node_end(list_t **head, const char *str, int index);
+void print_list(list_t *list);
+char *_getenv(info_t *info, const char *name);
+char *extract_name(char *env_str);
+char *extract_value(char *env_str);
+int _setenv(info_t *info, char *var, char *value);
+int _mysetenv(info_t *info);
+int _mygetenv(info_t *info);
 
-int is_chain(info_t *, char *, size_t *);
-void check_chain(info_t *, char *, size_t *, size_t, size_t);
-int replace_alias(info_t *);
-int replace_vars(info_t *);
-int replace_string(char **, char *);
+/*errors.c*/
+void _eputs(char *);
+int _eputchar(char);
+void eprint_number(int n);
 
+/*paths.c*/
+char *get_absolute_path(info_t *info, char *p);
+char *parent_dir(char* dir);
+char *path_join(char *p1, char *p2);
+
+int perform_external_cmd(info_t *info, char **envp);
+#ifdef _WIN32
+size_t getline(char **lineptr, size_t *n, FILE *stream);
+unsigned int getppid(void);
+int fork(void);
+#endif
 
 #endif

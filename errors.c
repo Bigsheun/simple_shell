@@ -17,6 +17,8 @@ void _eputs(char *str)
 		_eputchar(str[i]);
 		i++;
 	}
+
+	_eputchar(BUF_FLUSH);
 }
 
 /**
@@ -42,44 +44,25 @@ int _eputchar(char c)
 }
 
 /**
- * _putfd - writes the character c to given fd
- * @c: The character to print
- * @fd: The filedescriptor to write to
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
- */
-
-int _putfd(char c, int fd)
+* eprint_number - prints an integer
+* @n: number
+*/
+void eprint_number(int n)
 {
-	static int i;
-	static char buf[WRITE_BUF_SIZE];
+	unsigned int m;
 
-	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	if (n < 0)
 	{
-		write(fd, buf, i);
-		i = 0;
+		_eputchar('-');
+		m = -n;
 	}
-	if (c != BUF_FLUSH)
-		buf[i++] = c;
-	return (1);
-}
+	else
+		m = n;
+	/*end-if*/
 
-/**
- * _putsfd - prints an input string
- * @str: the string to be printed
- * @fd: the filedescriptor to write to
- * Return: the number of chars put
- */
-
-int _putsfd(char *str, int fd)
-{
-	int i = 0;
-
-	if (!str)
-		return (0);
-	while (*str)
-	{
-		i += _putfd(*str++, fd);
-	}
-	return (i);
+	if (m / 10 > 0)
+		eprint_number(m / 10);
+	/*end-if*/
+	_eputchar(m % 10 + '0');
+	_eputchar(BUF_FLUSH);
 }
