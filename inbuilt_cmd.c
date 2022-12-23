@@ -25,10 +25,8 @@ short is_inbuilt(char *cmd)
 /**
 * perform_inbuilt_cmd - calls the appropriate function
 * for inbuilt commands
-* @cmd: command
-* @cmd_line: command string
-* @envp: array of command-line strings
-* 
+* @info: Structure containing the command/etc
+*
 * Return: return status
 */
 int  perform_inbuilt_cmd(info_t *info)
@@ -45,11 +43,11 @@ int  perform_inbuilt_cmd(info_t *info)
 
 	return (1);
 }
+
 /**
 * get_builtin_cmd_tbl - Provides table of inbuilt commands
 * Prevents inconsistencies. Keeps the code dry
 *
-
 * Return: array of builtin_table (records)
 */
 builtin_table *get_builtin_cmd_tbl()

@@ -1,4 +1,11 @@
 #include "main.h"
+/**
+* perform_external_cmd - executes external commands
+* @info: structure contains command
+* @envp: array of environment strings
+*
+* Return: description
+*/
 int perform_external_cmd(info_t *info, char **envp)
 {
 	pid_t child_pid;

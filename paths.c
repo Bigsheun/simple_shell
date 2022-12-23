@@ -21,14 +21,14 @@ char *get_absolute_path(info_t *info, char *p)
 	}
 	else if (!_strcmp("~", p))
 		return (_getenv(info, "HOME"));
-	else if(starts_with(p, "~/"))
+	else if (starts_with(p, "~/"))
 	{
 		tmp = _getenv(info, "HOME");
 		tmp2 = path_join(tmp, p);
 		free(tmp);
 		return (tmp2);
 	}
-	else if(starts_with(p, "../"))
+	else if (starts_with(p, "../"))
 	{
 		tmp2 = _getenv(info, "PWD");
 		tmp = parent_dir(tmp2);
@@ -37,7 +37,7 @@ char *get_absolute_path(info_t *info, char *p)
 		free(tmp);
 		return (tmp2);
 	}
-	else if(starts_with(p, "./"))
+	else if (starts_with(p, "./"))
 	{
 		tmp = _getenv(info, "PWD");
 		tmp2 = path_join(tmp, p);
@@ -53,7 +53,7 @@ char *get_absolute_path(info_t *info, char *p)
 *
 * Return: parent path
 */
-char *parent_dir(char* dir)
+char *parent_dir(char *dir)
 {
 	int last_index_of = -1, i;
 	char *ret;
@@ -101,4 +101,3 @@ char *path_join(char *p1, char *p2)
 
 	return (tmp2);
 }
-

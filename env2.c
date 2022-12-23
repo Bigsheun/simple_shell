@@ -58,13 +58,13 @@ int _mysetenv(info_t *info)
 	unsigned int len;
 
 	args = info->cmd_buf;
-	if ((len = s_array_len(args)) != 3)
+	len = s_array_len(args);
+	if (len != 3)
 	{
 		_eputs("wrong argument count for 'setenv' ");
 		eprint_number(len);
 		return (1);
 	}
-		
 	_setenv(info, args[1], args[2]);
 
 	return (1);
@@ -82,7 +82,8 @@ int _mygetenv(info_t *info)
 	unsigned int len;
 
 	args = info->cmd_buf;
-	if ((len = s_array_len(args)) != 2)
+	len = s_array_len(args);
+	if (len != 2)
 	{
 		_eputs("wrong argument count for 'getenv' ");
 		eprint_number(len);

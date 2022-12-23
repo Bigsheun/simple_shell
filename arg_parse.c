@@ -61,6 +61,7 @@ int delimstart(char *str, char *delims, int index)
 /**
 * wordcount - count number of words in string
 * @str: string
+* @delims: word separators
 *
 * Return: number
 */

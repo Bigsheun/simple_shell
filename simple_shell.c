@@ -47,7 +47,7 @@ int main(int argc, char **argv,	char **envp)
 /**
 * get_line - safely gets a clean command string from getline
 * @lineptr: destination of string
-* @n: size of string to get (if not 0)
+* @count: size of string to get (if not 0)
 * @fd: stream to read from
 *
 * Return: size of string inputed
@@ -74,7 +74,7 @@ size_t get_line(char **lineptr, size_t *count, FILE *fd)
 * show_prompt - display prompt in interactive mode
 *
 */
-void show_prompt()
+void show_prompt(void)
 {
 	if (isatty(STDIN_FILENO))
 		write_stringz("$ ");

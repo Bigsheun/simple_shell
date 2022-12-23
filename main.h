@@ -33,7 +33,7 @@
 /*extern char **environ;*/
 
 /**
-* struct liststr - singly linked list
+* struct list_str - singly linked list
 * @index: index of environment
 * @str: a string
 * @next: pointer to the next node
@@ -46,28 +46,27 @@ typedef struct list_str
 } list_t;
 
 /**
- * struct passinfo - contains pseudo-arguements to pass into a function,
- * allowing uniform prototype for function pointer struct
- *
- * @arg: a string generated from getline containing arguements
- * @argv: an array of strings generated from arg
- * @path: a string path for the current command
- * @argc: the argument count
- * @line_count: the error count
- * @err_num: the error code for exit()s
- * @linecount_flag: if on count this line of input
- * @fname: the program filename
- * @env: linked list local copy of environ
- * @environ: custom modified copy of environ from LL env
- * @history: the history node
- * @alias: the alias node
- * @env_changed: on if environ was changed
- * @status: the return status of the last exec'd command
- * @cmd_buf: address of pointer to cmd_buf, on if chaining
- * @cmd_buf_type: CMD_type ||, &&, ;
- * @readfd: the fd from which to read line input
- * @histcount: the history line number count
- */
+* struct passinfo - contains pseudo-arguements to pass into a function,
+* allowing uniform prototype for function pointer struct
+*
+* @arg: a string generated from getline containing arguements
+* @argv: an array of strings generated from arg
+* @path: a string path for the current command
+* @argc: the argument count
+* @line_count: the error count
+* @err_num: the error code for exit()s
+* @linecount_flag: if on count this line of input
+* @fname: the program filename
+* @env: linked list local copy of environ
+* @history: the history node
+* @alias: the alias node
+* @env_changed: on if environ was changed
+* @status: the return status of the last exec'd command
+* @cmd_buf: address of pointer to cmd_buf, on if chaining
+* @cmd_buf_type: CMD_type ||, &&, ;
+* @readfd: the fd from which to read line input
+* @histcount: the history line number count
+*/
 
 
 typedef struct passinfo
@@ -110,7 +109,7 @@ typedef struct builtin
 
 /*simple_shell.c*/
 size_t get_line(char **lineptr, size_t *count, FILE *fd);
-void show_prompt();
+void show_prompt(void);
 size_t get_line(char **lineptr, size_t *count, FILE *fd);
 
 /*inbuilt_cmd*/
@@ -148,7 +147,7 @@ void write_strz_array(char **sa);
 unsigned int s_array_len(char **arr);
 
 /*env.c - env2.c*/
-int populate_env(info_t *info,char **envp);
+int populate_env(info_t *info, char **envp);
 list_t *add_node_end(list_t **head, const char *str, int index);
 void print_list(list_t *list);
 char *_getenv(info_t *info, const char *name);
@@ -165,7 +164,7 @@ void eprint_number(int n);
 
 /*paths.c*/
 char *get_absolute_path(info_t *info, char *p);
-char *parent_dir(char* dir);
+char *parent_dir(char *dir);
 char *path_join(char *p1, char *p2);
 
 int perform_external_cmd(info_t *info, char **envp);

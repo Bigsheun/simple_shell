@@ -54,7 +54,7 @@ int starts_with(const char *haystack, const char *needle)
 }
 
 /**
- * _strdup - duplicates a string
+ * str_dup - duplicates a string
  * @str: the string to duplicate
  *
  * Return: pointer to the duplicated string

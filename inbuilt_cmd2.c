@@ -1,12 +1,6 @@
 #include "main.h"
 
 /**
-*File: inbuilt_cmd2.h
-* description:
-* implementation for some of the inbuilt commands
-*/
-
-/**
 * _myexit - exits the shell
 * @info: compulsory info table for all commands
 *
@@ -33,7 +27,7 @@ int _myenv(info_t *info)
 /**
 * _mycd - changes current working directory
 * @info: command information structure
-* 
+*
 * Return: zero for success for now
 */
 int _mycd(info_t *info)

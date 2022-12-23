@@ -1,7 +1,9 @@
 #include "main.h"
 /**
 * populate_env - populates the environ of info_t
-* @info: pinter to info_t instance
+* @info: pointer to info_t instance
+* @envp: environment
+*
 * Return: return 1 or crash
 */
 int populate_env(info_t *info, char **envp)
@@ -16,7 +18,6 @@ int populate_env(info_t *info, char **envp)
 
 	return (1);
 }
-
 /**
  * _getenv - gets the value of an environ variable
  * @info: Structure containing potential arguments. Used to maintain
@@ -32,7 +33,7 @@ char *_getenv(info_t *info, const char *name)
 	buf = malloc(_strlen(name) + 2);
 	if (buf == NULL)
 		return (NULL);
-		
+
 	_strcpy(buf, name);
 	_strcat(buf, "=");
 
@@ -73,10 +74,9 @@ int _setenv(info_t *info, char *var, char *value)
 	node = info->env;
 	_strcpy(buf, var);
 	_strcat(buf, "=");
-	
 	while (node)
 	{
-		
+
 		if (starts_with(node->str, buf))
 		{
 			_strcat(buf, value);
@@ -87,7 +87,7 @@ int _setenv(info_t *info, char *var, char *value)
 			return (0);
 		}
 		node = node->next;
-		node_count ++;
+		node_count++;
 	}
 
 	_strcat(buf, value);
@@ -137,7 +137,6 @@ list_t *add_node_end(list_t **head, const char *str, int index)
 /**
 * print_list - print the strings in a list_t
 * @list: list head
-* @argv: array of command-line strings
 *
 * Description: Useful for printing environment variable
 * in env command
@@ -149,7 +148,7 @@ void print_list(list_t *list)
 
 	temp = list;
 	while (temp->next != NULL)
-	{	
+	{
 		write_stringz(temp->str);
 		write_stringz("\n");
 		temp = temp->next;
