@@ -11,4 +11,7 @@ getppid.c
 getline.c
 piped.c
 fork.c
+fork1.c
+fork2.c
+child.c
 functions-list.c

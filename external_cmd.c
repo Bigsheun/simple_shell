@@ -18,8 +18,10 @@ int perform_external_cmd(info_t *info, char **envp)
 	}
 	if (child_pid == 0)
 	{
-		execve(get_absolute_path(info, info->cmd_buf[0]),
-		info->cmd_buf, envp);
+		execve(
+			get_absolute_path(info, info->cmd_buf[0]),
+			info->cmd_buf, envp
+		);
 
 		/* TODO: PUT ERROR FUNCTION */
 	}

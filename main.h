@@ -147,7 +147,7 @@ void write_strz_array(char **sa);
 unsigned int s_array_len(char **arr);
 
 /*env.c - env2.c*/
-int populate_env(info_t *info, char **envp);
+int populate_env(info_t *info, char const **envp);
 list_t *add_node_end(list_t **head, const char *str, int index);
 void print_list(list_t *list);
 char *_getenv(info_t *info, const char *name);
