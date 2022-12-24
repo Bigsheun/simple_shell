@@ -147,7 +147,7 @@ void write_strz_array(char **sa);
 unsigned int s_array_len(char **arr);
 
 /*env.c - env2.c*/
-int populate_env(info_t *info, char const **envp);
+int populate_env(info_t *info, char **envp);
 list_t *add_node_end(list_t **head, const char *str, int index);
 void print_list(list_t *list);
 char *_getenv(info_t *info, const char *name);
@@ -161,13 +161,18 @@ int _mygetenv(info_t *info);
 void _eputs(char *);
 int _eputchar(char);
 void eprint_number(int n);
+void print_error(info_t *info, char *estr);
 
 /*paths.c*/
 char *get_absolute_path(info_t *info, char *p);
 char *parent_dir(char *dir);
 char *path_join(char *p1, char *p2);
 
-int perform_external_cmd(info_t *info, char **envp);
+/*external_cmd.c*/
+int perform_external_cmd(info_t *info, const char **envp);
+int is_cmd(char *path);
+char *find_cmd(info_t *info, char *path);
+
 #ifdef _WIN32
 size_t getline(char **lineptr, size_t *n, FILE *stream);
 unsigned int getppid(void);

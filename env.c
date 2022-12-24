@@ -6,7 +6,7 @@
 *
 * Return: return 1 or crash
 */
-int populate_env(info_t *info, char const **envp)
+int populate_env(info_t *info, char **envp)
 {
 	list_t *node = NULL;
 	size_t i;

@@ -66,3 +66,17 @@ void eprint_number(int n)
 	_eputchar(m % 10 + '0');
 	_eputchar(BUF_FLUSH);
 }
+
+/**
+* print_error - prints an error message
+* @info: the parameter info struct
+* @estr: string containing specified error
+*/
+void print_error(info_t *info, char *estr)
+{
+	_eputs(info->fname);
+	_eputs(": ");
+	_eputs(info->cmd_buf[0]);
+	_eputs(": ");
+	_eputs(estr);
+}

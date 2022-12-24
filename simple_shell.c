@@ -10,7 +10,7 @@
 *
 * Return: 0 success
 */
-int main(int argc, char **argv,	char **envp)
+int main(int argc, char **argv, char **envp)
 {
 	char *input = NULL, *cmd, **cmd_buffer;
 	size_t n = 0, count;
@@ -36,7 +36,7 @@ int main(int argc, char **argv,	char **envp)
 		if (is_inbuilt(cmd))
 			perform_inbuilt_cmd(&info);
 		else
-			perform_external_cmd(&info, envp);
+			perform_external_cmd(&info, (const char **) envp);
 		/*end-if*/
 		write_stringz("\n");
 
