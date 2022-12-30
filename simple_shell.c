@@ -42,6 +42,8 @@ int main(int argc, char **argv, char **envp)
 
 		count = get_line(&input, &n, stdin);
 	}
+
+	return (0);
 }
 
 /**

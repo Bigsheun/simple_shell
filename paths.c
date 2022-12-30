@@ -11,7 +11,7 @@ char *get_absolute_path(info_t *info, char *p)
 	char *tmp, *tmp2;
 
 	if (starts_with(p, "/"))
-		return (str_dup(p));
+		return (_strdup(p));
 	else if (!_strcmp("..", p))
 	{
 		tmp = _getenv(info, "PWD");

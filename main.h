@@ -127,7 +127,7 @@ int _mypwd(info_t *);
 int _strcmp(char *src, char *dst);
 void str_replace(char *s, char find, char replace);
 int starts_with(const char *haystack, const char *needle);
-char *str_dup(const char *);
+char *_strdup(const char *);
 
 /*string_utils2*/
 int _strlen(const char *s);

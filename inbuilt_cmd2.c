@@ -8,6 +8,7 @@
 */
 int _myexit(info_t *info)
 {
+	(void)(info);
 	exit(0);
 	return (0);
 }
@@ -32,6 +33,7 @@ int _myenv(info_t *info)
 */
 int _mycd(info_t *info)
 {
+	(void)(info);
 	return (0);
 }
 
@@ -43,5 +45,6 @@ int _mycd(info_t *info)
 */
 int _mypwd(info_t *info)
 {
+	(void)(info);
 	return (0);
 }

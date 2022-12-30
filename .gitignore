@@ -1,17 +1,18 @@
+# Targets.txt Sources.txt
 *.txt
+
+# Helper programs
 *.php
-new_files/
+
+# IDE generated stuff
+functions-list.c
 views/
+Makefile
+
+# sublime project
 *.sublime-project
 *.sublime-workspace
-Makefile
+
+# outputs
 *.o
 *.exe
-getppid.c
-getline.c
-piped.c
-fork.c
-fork1.c
-fork2.c
-child.c
-functions-list.c

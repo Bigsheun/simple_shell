@@ -4,7 +4,7 @@
 *
 * Return: length of string
 */
-int _strlen(char *s)
+int _strlen(const char *s)
 {
 	int len = 0;
 
@@ -21,7 +21,7 @@ int _strlen(char *s)
 *
 * Return: dest
 */
-char *_strcpy(char *dest, char *src)
+char *_strcpy(char *dest, const char *src)
 {
 	int i;
 
@@ -42,7 +42,7 @@ char *_strcpy(char *dest, char *src)
 * Return: dest
 */
 
-char *_strcat(char *dest, char *src)
+char *_strcat(char *dest, const char *src)
 {
 	int i, end;
 
