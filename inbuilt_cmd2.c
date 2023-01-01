@@ -34,6 +34,7 @@ int _myenv(info_t *info)
 int _mycd(info_t *info)
 {
 	(void)(info);
+	write_stringz("\ninbuilt command cd not implemented\n");
 	return (0);
 }
 
@@ -46,5 +47,6 @@ int _mycd(info_t *info)
 int _mypwd(info_t *info)
 {
 	(void)(info);
+	write_stringz("\ninbuilt command pwd not implemented\n");
 	return (0);
 }

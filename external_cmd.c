@@ -12,33 +12,36 @@ int perform_external_cmd(info_t *info, const char **envp)
 	char *cmd;
 
 	child_pid = fork();
-	if (child_pid == -1)
-	{
-		/* TODO: PUT ERROR FUNCTION */
-		exit(1);
-	}
+/*===============child=process=============================*/
 	if (child_pid == 0)
 	{
 		cmd = get_absolute_path(info, info->cmd_buf[0]);
 		if (cmd == NULL)
+		{
 			cmd = find_cmd(info, info->cmd_buf[0]);
+			if (cmd == NULL)
+			{
+				info->fname = info->argv[0];
+				print_error(info, "command not found");
+				exit(1);
+			}
+		}
 
-		if (cmd != NULL)
+		if (cmd != NULL && is_cmd(cmd))
+		{
 			execve(
 				(const char *) cmd,
 				(char *const*) info->cmd_buf,
 				(char *const*) envp
 			);
-		else
-		{
-			info->fname = info->argv[0];
-			print_error(info, "command not found");
+			exit(1); /*in-case*/
 		}
 	}
+/*============================================================*/
 	wait(NULL);
-
 	return (0);
 }
+
 /**
 * is_cmd - is it executable
 * @path: path to file
@@ -48,11 +51,11 @@ int perform_external_cmd(info_t *info, const char **envp)
 int is_cmd(char *path)
 {
 
-	if (access(path, F_OK | X_OK) == -1)
-		return (1);
+	if (access(path, F_OK) != -1)
+		if (access(path, X_OK) != -1)
+			return (1);
 
 	return (0);
-
 }
 
 /**
@@ -80,7 +83,7 @@ char *find_cmd(info_t *info, char *path)
 			return (cmd);
 
 		free(cmd);
-
+		i++;
 	}
 
 	return (NULL);
